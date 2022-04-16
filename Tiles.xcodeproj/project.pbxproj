@@ -19,6 +19,7 @@
 		C07E2558280B1F3C0080BD39 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07E2557280B1F3C0080BD39 /* Extensions.swift */; };
 		C07E255A280B21820080BD39 /* TileOverlapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07E2559280B21820080BD39 /* TileOverlapView.swift */; };
 		C07E255C280B23530080BD39 /* ActiveSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07E255B280B23530080BD39 /* ActiveSheet.swift */; };
+		C07E255E280B58E70080BD39 /* NewTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07E255D280B58E70080BD39 /* NewTileView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		C07E2557280B1F3C0080BD39 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		C07E2559280B21820080BD39 /* TileOverlapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileOverlapView.swift; sourceTree = "<group>"; };
 		C07E255B280B23530080BD39 /* ActiveSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveSheet.swift; sourceTree = "<group>"; };
+		C07E255D280B58E70080BD39 /* NewTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTileView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,18 +69,16 @@
 		C07E253E280B132D0080BD39 /* Tiles */ = {
 			isa = PBXGroup;
 			children = (
+				C07E2562280B671D0080BD39 /* Sheets */,
+				C07E2561280B66FA0080BD39 /* Views */,
+				C07E2560280B66ED0080BD39 /* ViewModels */,
+				C07E255F280B66E70080BD39 /* Models */,
 				C07E253F280B132D0080BD39 /* TilesApp.swift */,
 				C07E2541280B132D0080BD39 /* ContentView.swift */,
 				C07E2543280B13300080BD39 /* Assets.xcassets */,
 				C07E2545280B13300080BD39 /* Preview Content */,
-				C07E254D280B13AB0080BD39 /* CalculatorView.swift */,
-				C07E254F280B15770080BD39 /* ViewModel.swift */,
-				C07E2551280B15920080BD39 /* CalculationModel.swift */,
-				C07E2553280B15E70080BD39 /* TileModel.swift */,
 				C07E2555280B16110080BD39 /* Unit.swift */,
 				C07E2557280B1F3C0080BD39 /* Extensions.swift */,
-				C07E2559280B21820080BD39 /* TileOverlapView.swift */,
-				C07E255B280B23530080BD39 /* ActiveSheet.swift */,
 			);
 			path = Tiles;
 			sourceTree = "<group>";
@@ -89,6 +89,41 @@
 				C07E2546280B13300080BD39 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		C07E255F280B66E70080BD39 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C07E2551280B15920080BD39 /* CalculationModel.swift */,
+				C07E2553280B15E70080BD39 /* TileModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		C07E2560280B66ED0080BD39 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				C07E254F280B15770080BD39 /* ViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		C07E2561280B66FA0080BD39 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C07E254D280B13AB0080BD39 /* CalculatorView.swift */,
+				C07E2559280B21820080BD39 /* TileOverlapView.swift */,
+				C07E255D280B58E70080BD39 /* NewTileView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		C07E2562280B671D0080BD39 /* Sheets */ = {
+			isa = PBXGroup;
+			children = (
+				C07E255B280B23530080BD39 /* ActiveSheet.swift */,
+			);
+			path = Sheets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,6 +198,7 @@
 			files = (
 				C07E2552280B15920080BD39 /* CalculationModel.swift in Sources */,
 				C07E255C280B23530080BD39 /* ActiveSheet.swift in Sources */,
+				C07E255E280B58E70080BD39 /* NewTileView.swift in Sources */,
 				C07E255A280B21820080BD39 /* TileOverlapView.swift in Sources */,
 				C07E2542280B132D0080BD39 /* ContentView.swift in Sources */,
 				C07E254E280B13AB0080BD39 /* CalculatorView.swift in Sources */,
@@ -227,7 +263,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -281,7 +317,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

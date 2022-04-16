@@ -15,25 +15,44 @@ struct CalculatorView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16){
-            ScrollView(.horizontal, showsIndicators: false){
-                HStack{
-                    ForEach(model.tiles){ tile in
-                        Rectangle()
-                            .fill(Color.brown)
-                            .frame(width: tile.width.asFeet.relativeValue, height: tile.length.asFeet.relativeValue, alignment: .center)
-                            .overlay(
-                                Text("\(tile.length.withSymbol) * \(tile.width.withSymbol)")
-                            )
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                self.model.calculations.append(.init(tile: tile))
-                            }
-                    }
-                }
-            }
             
             ScrollView{
-                VStack(alignment: .leading, spacing: 16){
+                
+                LazyVStack(alignment: .leading, spacing: 16){
+                    
+                    ScrollView(.horizontal, showsIndicators: false){
+                        ScrollViewReader{ reader in
+                            HStack{
+                                ForEach(0..<model.tiles.count, id:\.self){ i in
+                                    let tile = model.tiles[i]
+                                    Rectangle()
+                                        .fill(Color.brown)
+                                        .frame(width: tile.width.asFeet.relativeValue, height: tile.length.asFeet.relativeValue, alignment: .center)
+                                        .overlay(
+                                            Text("\(tile.length.withSymbol) * \(tile.width.withSymbol)")
+                                        )
+                                        .contentShape(Rectangle())
+                                        .onTapGesture {
+                                            self.model.calculations.append(.init(tile: tile))
+                                        }
+                                        .id(i)
+                                }
+                            }
+                            .onChange(of: model.scrollTile, perform: { id in
+                                if let _ = id, let index = model.tiles.indices.last{
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                                        withAnimation(.spring()){
+                                            reader.scrollTo(index)
+                                        }
+                                    })
+                                    model.scrollTile = nil
+                                }
+                            })
+                        }
+                    
+                    }
+                    
+            
                     ForEach(0..<model.calculations.count, id:\.self){ i in
                         CalculatorCell(calculation: $model.calculations[i])
                     }
@@ -42,8 +61,16 @@ struct CalculatorView: View {
             
             
             
-            Spacer()
-            
+        }
+        .overlay{
+            if model.calculations.isEmpty{
+                Text("Add a new calculation\nto begin")
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(Color(.systemGray2))
+                    .padding(.top, 96)
+            }
         }
         .padding()
         .navigationTitle("Tile master")
@@ -58,12 +85,15 @@ struct CalculatorView: View {
             if item == .overlap{
                 TileOverlapView()
                     .environmentObject(model)
+            }else if item == .newTile{
+                NewTileView()
+                    .environmentObject(model)
             }
         })
         .toolbar(content: {
             ToolbarItemGroup(placement: .navigationBarTrailing, content: {
                 Button(action: {
-                    
+                    self.sheet = .newTile
                 }){
                     Text("New Tile")
                 }
@@ -99,6 +129,7 @@ struct CalculatorCell:View{
         VStack{
             HStack{
                 TextField("Name", text: $calculation.name)
+                    .font(.title2)
                 Text("\(calculation.tile.length.withSymbol) * \(calculation.tile.width.withSymbol)")
             }
             HStack{
@@ -128,6 +159,10 @@ struct CalculatorCell:View{
                 Spacer()
                 Text("Boxes: \(String(format: "%.1f", calculation.boxes))")
             }
+            .padding(.horizontal)
+            .padding(.vertical, 5)
+            .background(Color(.systemGray6))
+            .clipShape(RoundedRectangle(cornerRadius: 8))
         }
         .onChange(of: width, perform: { w in
             if !w.isEmpty{

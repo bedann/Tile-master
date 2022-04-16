@@ -11,6 +11,7 @@ class ViewModel: ObservableObject {
     
     @Published var calculations = [CalculationModel]()
     @Published var tiles = [TileModel]()
+    @Published var scrollTile:String? = nil
     
     init(){
         tiles.append(.init(length: .feet(1), width: .feet(1), boxSize: 17))

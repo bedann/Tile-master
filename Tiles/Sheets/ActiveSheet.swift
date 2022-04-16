@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum ActiveSheet: Identifiable {
-    case overlap;
+    case overlap, newTile;
     
     var id:UUID{
         return UUID()
