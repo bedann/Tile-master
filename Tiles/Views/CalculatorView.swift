@@ -22,19 +22,18 @@ struct CalculatorView: View {
                     
                     ScrollView(.horizontal, showsIndicators: false){
                         ScrollViewReader{ reader in
-                            HStack{
+                            HStack(alignment: .top){
                                 ForEach(0..<model.tiles.count, id:\.self){ i in
                                     let tile = model.tiles[i]
-                                    Rectangle()
-                                        .fill(Color.brown)
+                                    Image("tile")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
                                         .frame(width: tile.width.asFeet.relativeValue, height: tile.length.asFeet.relativeValue, alignment: .center)
+                                        .clipped()
+                                        .border(Color.brown.opacity(0.2), width: 1)
                                         .overlay(
                                             Text("\(tile.length.withSymbol) * \(tile.width.withSymbol)")
                                         )
-                                        .contentShape(Rectangle())
-                                        .onTapGesture {
-                                            self.model.calculations.append(.init(tile: tile))
-                                        }
                                         .id(i)
                                 }
                             }
@@ -95,7 +94,10 @@ struct CalculatorView: View {
                 Button(action: {
                     self.sheet = .newTile
                 }){
-                    Text("New Tile")
+                    HStack{
+                        Image(systemName: "plus.rectangle.fill")
+                        Text("New Tile")
+                    }
                 }
             })
             
@@ -103,13 +105,22 @@ struct CalculatorView: View {
                 Button(action: {
                     self.showActionSheet.toggle()
                 }){
-                    Text("New Calculation")
+                    HStack{
+                        Image(systemName: "plus.circle.fill")
+                        Text("New Calculation")
+                            .font(.callout)
+                    }
                 }
+                
                 
                 Button(action: {
                     self.sheet = .overlap
                 }){
-                    Text("Show Overlaps")
+                    HStack{
+                        Image(systemName: "square.3.layers.3d.down.backward")
+                        Text("Overlaps")
+                            .font(.callout)
+                    }
                 }
             })
         })

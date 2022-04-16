@@ -27,9 +27,12 @@ struct NewTileView: View {
                     Section(header:Text("Preview")){
                         HStack{
                             Spacer()
-                            Rectangle()
-                                .fill(Color(.systemBrown))
+                            Image("tile")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .background(Color.brown)
                                 .frame(width: widthUnit?.asFeet.relativeValue ?? 0, height: lengthUnit?.asFeet.relativeValue ?? 0, alignment: .center)
+                                .clipped()
                             Spacer()
                         }
                     }
@@ -79,7 +82,10 @@ struct NewTileView: View {
                 ToolbarItem(placement: .navigationBarTrailing, content: {
                     Button("Save"){
                         let tile:TileModel = .init(length: lengthUnit!, width: widthUnit!, boxSize: Int(boxSize)!)
-                        model.tiles.append(tile )
+                        model.tiles.append(tile)
+                        model.tiles.sort { a, b in
+                            return a.area < b.area
+                        }
                         presentation.wrappedValue.dismiss()
                         model.scrollTile = tile.id
                     }.disabled(lengthUnit == nil || widthUnit == nil || boxSize.isEmpty)
