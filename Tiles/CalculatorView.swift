@@ -11,6 +11,7 @@ struct CalculatorView: View {
     
     @StateObject var model = ViewModel()
     @State var sheet:ActiveSheet? = nil
+    @State var showActionSheet = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16){
@@ -46,6 +47,13 @@ struct CalculatorView: View {
         }
         .padding()
         .navigationTitle("Tile master")
+        .actionSheet(isPresented: $showActionSheet, content: {
+            ActionSheet(title: Text("New Calculation"), message: Text("Select the tile model to calculate"), buttons: model.tiles.map{ tile in
+                    .default(Text("\(tile.length.withSymbol) * \(tile.width.withSymbol)"), action: {
+                        self.model.calculations.append(.init(tile: tile))
+                    })
+            }.and(o: .cancel()))
+        })
         .sheet(item: $sheet, content: { item in
             if item == .overlap{
                 TileOverlapView()
@@ -63,7 +71,7 @@ struct CalculatorView: View {
             
             ToolbarItemGroup(placement: .bottomBar, content: {
                 Button(action: {
-                    
+                    self.showActionSheet.toggle()
                 }){
                     Text("New Calculation")
                 }
